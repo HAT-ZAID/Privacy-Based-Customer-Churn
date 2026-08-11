@@ -1,0 +1,9 @@
+[theme]
+base = "dark"
+font = "Manrope, sans-serif"
+baseRadius = "small"
+buttonRadius = "medium"
+primaryColor = "#33c0ad"
+backgroundColor = "#0E1514"
+secondaryBackgroundColor = "#17211F"
+textColor = "#f3f8f0"

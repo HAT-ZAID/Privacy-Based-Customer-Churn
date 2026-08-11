@@ -184,13 +184,15 @@ def root():
     return {"message": "Welcome to the Churn Prediction API",
             "docs" :  "use /docs for API documentation and testing",
             "health_check" : "use /Health to check the health of the API",}
-    
+
+def validate_features(features_dict: dict[str, float]) : # This function needs to fixed or you can say called
+    misssing_features = set(FEATURE_NAMES) - set(features_dict.keys())
+    if misssing_features:
+        raise ValueError (f"Some features are missing: {', '.join(sorted(misssing_features))}") 
+     
 @app.get("/Health")
 def Health_check():
-    def validate_features(features_dict: dict[str, float]) :
-        misssing_features = set(FEATURE_NAMES) - set(features_dict.keys())
-        if misssing_features:
-            raise ValueError (f"Some features are missing: {', '.join(sorted(misssing_features))}")
+
     if app.state.model:
         return {"message": "API is healthy and ready to serve requests."}
     else:
