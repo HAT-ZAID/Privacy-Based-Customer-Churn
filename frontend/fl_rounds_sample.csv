@@ -1,0 +1,4 @@
+round,auc,num_examples_train,num_examples_eval,note
+1,0.9910,5633,1410,Telco federated round 1
+2,0.9926,5633,1410,Telco federated round 2
+3,0.9929,5633,1410,Telco federated round 3

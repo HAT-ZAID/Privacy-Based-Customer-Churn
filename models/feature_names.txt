@@ -1,0 +1,52 @@
+Gender
+Age
+Under 30
+Senior Citizen
+Married
+Dependents
+Number of Dependents
+Zip Code
+Latitude
+Longitude
+Population
+Referred a Friend
+Number of Referrals
+Tenure in Months
+Phone Service
+Avg Monthly Long Distance Charges
+Multiple Lines
+Internet Service
+Avg Monthly GB Download
+Online Security
+Online Backup
+Device Protection Plan
+Premium Tech Support
+Streaming TV
+Streaming Movies
+Streaming Music
+Unlimited Data
+Paperless Billing
+Monthly Charge
+Total Charges
+Total Refunds
+Total Extra Data Charges
+Total Long Distance Charges
+Total Revenue
+Satisfaction Score
+CLTV
+Offer_No Offer
+Offer_Offer A
+Offer_Offer B
+Offer_Offer C
+Offer_Offer D
+Offer_Offer E
+Internet Type_Cable
+Internet Type_DSL
+Internet Type_Fiber Optic
+Internet Type_No Internet
+Contract_Month-to-Month
+Contract_One Year
+Contract_Two Year
+Payment Method_Bank Withdrawal
+Payment Method_Credit Card
+Payment Method_Mailed Check

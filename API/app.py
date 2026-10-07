@@ -13,7 +13,7 @@ import joblib  # type: ignore
 # General Configurations
 ## Model Loading
 BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR.parent / "models" / "Telco_xgb_v1.joblib"
+MODEL_PATH = BASE_DIR.parent / "models" / "Telco_xgb.joblib"
 MODEL = joblib.load(MODEL_PATH)                          
 
 ## API Configuration
