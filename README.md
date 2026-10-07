@@ -174,10 +174,9 @@ Listed rather than hidden:
 ## Notes
 
 - **Data:** `data/telco_original.csv` is the public [Kaggle Telco churn dataset](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) (IBM). Customer IDs are generated, all rows are California — this is sample data, not real customers.
-- **How much of this is AI-assisted, precisely:**
-  - **The centralized path is my own work.** `notebooks/Privacy_churn_v1.ipynb`, `notebooks/Privacy_churn_v2.ipynb`, `API/app.py`, and `frontend/streamlit_app.py` were written without AI assistance. So were the bugs listed in [What I got wrong along the way](#what-i-got-wrong-along-the-way) — the label leakage, the `inplace` bug, and the encoder-before-split ordering were mistakes I made and diagnosed myself.
+- **How much of this is AI-assisted:**
+  - **The centralized path is my own work** — `notebooks/Privacy_churn_v1.ipynb`, `notebooks/Privacy_churn_v2.ipynb`, `API/app.py`, and `frontend/streamlit_app.py` were written without AI assistance.
   - **The federated lab is AI-assisted**, and I used AI as a learning tool rather than a code generator: I asked for explanations of Flower and XGBoost mechanics, read the answers, then implemented the Telco migration myself. The `auc: nan` bug was found by me reading the logs — `dataset.shuffle(seed=42)` is my fix.
-  - **The three files in `docs/` are AI-generated** from a knowledge graph of this repo, at my direction. They describe the code accurately but they are not hand-written prose.
 - **Scope:** Flower simulation runtime only — no live multi-machine deployment. The production path (TLS, SuperNode auth) is written up, not executed.
 - MIT licensed.
 ---
