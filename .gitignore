@@ -1,3 +1,27 @@
+# Virtual env (thousands of files, platform-specific)
 churnenv/
+
+# Editors / agent tooling
 .vscode/
 .agents/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Generated knowledge graph
+.ua/
+.playwright-mcp/
+
+# Flower / Ray runtime scratch
+.flwr/
+.ray/
+fl_telco_output.txt
+
+# Caches (e.g. Optuna study DB — regenerable)
+*.db
+
+# Environments
+.env
+.venv/
+venv/

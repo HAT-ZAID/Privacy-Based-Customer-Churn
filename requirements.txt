@@ -1,0 +1,37 @@
+# Direct dependencies for Privacy-Based-Customer-Churn
+# Pinned to the versions actually tested in churnenv (Python 3.11.9).
+#
+#   python -m venv churnenv
+#   churnenv\Scripts\Activate.ps1
+#   pip install -r requirements.txt
+#
+# Keep flwr here in sync with flwr-version-target in quickstart-xgboost/pyproject.toml.
+
+# --- Federated learning core ---
+flwr==1.31.0
+flwr-datasets==0.6.0
+xgboost==3.2.0
+
+# --- Data pipeline ---
+pandas==2.3.3
+numpy==2.4.6
+scikit-learn==1.9.0
+joblib==1.5.3
+datasets==4.8.5
+pyarrow==24.0.0
+
+# --- API serving ---
+fastapi==0.138.2
+uvicorn==0.49.0
+pydantic==2.13.4
+
+# --- Frontend ---
+streamlit==1.61.1
+
+# --- Simulation backend (pulled in by flwr[simulation]) ---
+ray==2.55.1
+
+# --- Notebooks ---
+notebook
+matplotlib==3.11.1
+seaborn==0.13.2
