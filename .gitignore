@@ -25,3 +25,10 @@ fl_telco_output.txt
 .env
 .venv/
 venv/
+
+# Teaching exercise, not part of the shipped project. Kept locally; see
+# docs/fed-guide.md Lab 3 for the exercises it holds.
+frontend/federated_demo.py
+
+# Local backups
+.local_backup/
