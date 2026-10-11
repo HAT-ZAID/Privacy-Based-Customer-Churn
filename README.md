@@ -25,6 +25,35 @@ re-running without it; see Open issues at the bottom.
 
 ---
 
+## The dataset
+
+IBM's Telco Customer Churn sample — a fictional California telco, one fiscal quarter, 7,043
+customer records. **1,869 churned, 5,174 retained.**
+
+The widely-used Kaggle version is 21 columns. This one is the wider Cognos Analytics variant, which
+adds several fields the public version omits:
+
+| Group | Columns |
+|---|---|
+| Geography | `Zip Code`, `Latitude`, `Longitude`, `Population` |
+| Financials | `Total Refunds`, `Total Extra Data Charges`, `Total Long Distance Charges`, `Total Revenue` |
+| Derived scores | `Satisfaction Score`, `Customer Status`, `Churn Score`, `CLTV` |
+| Exit detail | `Churn Category`, `Churn Reason` |
+
+50 raw columns in, 52 after one-hot encoding `Offer`, `Internet Type` and `Payment Method`. The
+remaining derived fields are what make this dataset interesting *and* what makes it awkward — see
+Open issues.
+
+One structural quirk: churned rows are heavily front-loaded. Every one of the 1,869 sits in the
+first 2,535 records, so **the last 60% of the file contains no churners at all.** Churn density by
+tenth of the file runs 0.68, 0.38, 1.00, 0.60, then zero for the rest. That shapes the correlation
+matrix and any contiguous split — see Open issues.
+
+Source: [`data/telco_original.csv`](data/telco_original.csv), generated IDs rather than real
+customers.
+
+---
+
 ## The notebook
 
 `notebooks/Privacy_churn_v2.ipynb` — 67 cells, outputs recorded. This is where the numbers above
@@ -113,6 +142,12 @@ booster depends on — which is why Flower concatenates rather than averaging.
 The two sides share no Python. What they share is the 52-column `FEATURE_NAMES` ordering, currently
 duplicated in three files rather than imported from one config module.
 
+One thing worth knowing if you extend this: `task.py` shuffles before partitioning, and that line
+is load-bearing. `IidPartitioner` shards contiguously without shuffling, and Telco's churned rows
+are all front-loaded into the first 2,535 records — so a contiguous split hands one branch every
+churner and the other none, leaving it with a single-class validation set. Details in
+`docs/fed-guide.md`.
+
 ### Federated results
 
 | Model | Metric | Protocol |
@@ -127,19 +162,6 @@ on — so they're optimistic. The centralized row is a test set the model never 
 global test set would make them comparable; that isn't built yet.
 
 The federated run reproduces across invocations: `0.9909828030774182 → 0.9926511264596904`.
-
-### The `IidPartitioner` trap
-
-`IidPartitioner` never shuffles — it calls `dataset.shard(contiguous=True)`. Telco is label-ordered
-(all 1,869 churned rows sit inside the first ~3,500), so a contiguous split can hand one branch a
-partition with zero churned customers. Its validation set goes single-class, ROC-AUC is undefined,
-and `eval_set` returns `nan` — silently, with training otherwise looking fine.
-
-```python
-dataset = dataset.shuffle(seed=42)   # one line, before partitioning
-```
-
-IID partitioning is only IID if your input isn't ordered by the label.
 
 ### Run it
 
@@ -192,8 +214,6 @@ notes, practice exercises.
 
 ## Notes
 
-- **Data:** `telco_original.csv` is the public IBM/Kaggle sample set — generated IDs, not real
-  customers.
 - **AI use:** the centralized path is my own work; the federated side was adapted from Flower's
   XGBoost quickstart and was AI-assisted, used to learn Flower and XGBoost mechanics rather than to
   generate code.
