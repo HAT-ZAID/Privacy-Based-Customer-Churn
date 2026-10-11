@@ -123,6 +123,11 @@ def load_data(partition_id, num_clients):
         dataset = Dataset.from_dict(
             {"inputs": list(inputs), "label": labels.astype(np.float32)}
         )
+        # Load-bearing. IidPartitioner shards contiguously and does NOT shuffle,
+        # while Telco's churned rows are all front-loaded (all 1869 sit in the
+        # first ~2535 records). Without this, one branch gets every churner and
+        # the other gets none -- its validation split goes single-class, ROC-AUC
+        # is undefined, and eval_set returns nan silently.
         dataset = dataset.shuffle(seed=42)
         partitioner = IidPartitioner(num_partitions=num_clients)
         partitioner.dataset = dataset

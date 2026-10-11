@@ -46,8 +46,8 @@ Open issues.
 
 One structural quirk: churned rows are heavily front-loaded. Every one of the 1,869 sits in the
 first 2,535 records, so **the last 60% of the file contains no churners at all.** Churn density by
-tenth of the file runs 0.68, 0.38, 1.00, 0.60, then zero for the rest. That shapes the correlation
-matrix and any contiguous split — see Open issues.
+tenth of the file runs 0.68, 0.38, 1.00, 0.60, then zero for the rest. Worth knowing before you
+read a correlation matrix or split this by row.
 
 Source: [`data/telco_original.csv`](data/telco_original.csv), generated IDs rather than real
 customers.
@@ -141,12 +141,6 @@ booster depends on — which is why Flower concatenates rather than averaging.
 
 The two sides share no Python. What they share is the 52-column `FEATURE_NAMES` ordering, currently
 duplicated in three files rather than imported from one config module.
-
-One thing worth knowing if you extend this: `task.py` shuffles before partitioning, and that line
-is load-bearing. `IidPartitioner` shards contiguously without shuffling, and Telco's churned rows
-are all front-loaded into the first 2,535 records — so a contiguous split hands one branch every
-churner and the other none, leaving it with a single-class validation set. Details in
-`docs/fed-guide.md`.
 
 ### Federated results
 
