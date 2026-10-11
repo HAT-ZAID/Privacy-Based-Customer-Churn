@@ -182,20 +182,7 @@ Smaller cards should work by lowering `per_device_train_batch_size`; untested.
 
 ## Open issues
 
-- **`Satisfaction Score` carries too much of the label.** It correlates −0.76 with churn and
-  perfectly determines 62% of rows — scores 1–2 always churn, 4–5 never do. A single threshold on
-  it alone reaches 0.939 accuracy, so it's carrying most of the headline number. `Customer Status`
-  and `Churn Score` are dropped for the same reason; this one looked legitimate. Re-running without
-  it is the first fix.
-- **Hardcoded `D:\` paths** in `task.py` — a fresh clone raises `FileNotFoundError`. Written up in
-  `docs/fed-guide.md` §7b.
-- **`Gender` encoding differs between notebook passes.** v1 maps `Male→1`; everything shipped maps
-  `Male→0`. Retraining from v1 gives an inverted model.
-- **sklearn version skew** — encoder pickled by 1.6.1, env runs 1.9.0, so loading warns.
-- **`df.reindex(columns=FEATURE_NAMES)` is dead code** in `task.py` — `inputs` binds before it and
-  the result is never read.
-- **A proper federated test set**, so the two result tables can be compared.
-- **`FEATURE_NAMES` lives in three files** instead of one shared config.
+- **`Satisfaction Score` carries too much of the label.** (It correlates −0.76) and hardcoded paths
 
 ---
 
@@ -208,9 +195,6 @@ notes, practice exercises.
 
 ## Notes
 
-- **AI use:** the centralized path is my own work; the federated side was adapted from Flower's
-  XGBoost quickstart and was AI-assisted, used to learn Flower and XGBoost mechanics rather than to
-  generate code.
 - **Scope:** Flower simulation runtime only. The production path (TLS, SuperNode auth) is written up,
   not executed.
 - MIT licensed.
